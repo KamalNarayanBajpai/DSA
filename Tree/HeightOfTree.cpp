@@ -106,6 +106,38 @@ public:
         return maxi;
     }
 };
+
+/*
+* Two Binary Trees Are Identical Leetcode 100
+* Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+* Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+* Example 1:
+* Input: p = [1,2,3], q = [1,2,3]
+* Output: true
+* Example 2:
+* Input: p = [1,2], q = [1,null,2]
+* Output: false
+* Example 3:
+* Input: p = [1,2,1], q = [1,1,2]
+* Output: false
+* Constraints:
+* The number of nodes in both trees is in the range [0, 100].
+* -10^4 <= Node.val <= 10^4
+*/
+
+
+class TwoBinaryTreesAreIdentical {
+public:
+    bool same(TreeNode* p, TreeNode* q){
+        if(p==NULL && q==NULL)return true;
+        if (p==NULL || q==NULL)return false;
+        if(p->val!=q->val)return false;
+        return same(p->left,q->left) && same(p->right,q->right);
+    }
+    bool isSameTree(TreeNode* p, TreeNode* q) {
+        return same(p,q);
+    }
+};
 int main(){
     TreeNode* root = new TreeNode(1);
     root->left = new TreeNode(2);
@@ -119,6 +151,17 @@ int main(){
     cout<<ht.height(root)<<endl;
     BalancedBinaryTree sol;
     cout<<sol.isBalanced(root)<<endl;
+
+    DiameterOfBinaryTree dt;
+    cout<<dt.diameterOfBinaryTree(root)<<endl;
+
+    BinaryTreeMaximumPathSum btm;
+    cout<<btm.maxPathSum(root)<<endl;
+
+    TwoBinaryTreesAreIdentical tbt;
+    cout<<tbt.isSameTree(root,root)<<endl;//pass another tree to check if they are identical or not 
+
+
 
     return 0;
 }
