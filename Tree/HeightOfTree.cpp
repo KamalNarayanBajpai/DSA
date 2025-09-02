@@ -124,20 +124,69 @@ public:
 * The number of nodes in both trees is in the range [0, 100].
 * -10^4 <= Node.val <= 10^4
 */
-
-
 class TwoBinaryTreesAreIdentical {
 public:
-    bool same(TreeNode* p, TreeNode* q){
-        if(p==NULL && q==NULL)return true;
-        if (p==NULL || q==NULL)return false;
-        if(p->val!=q->val)return false;
-        return same(p->left,q->left) && same(p->right,q->right);
-    }
     bool isSameTree(TreeNode* p, TreeNode* q) {
-        return same(p,q);
+        if(p==NULL && q==NULL)return true;
+        if(p==NULL || q==NULL)return false;
+        if(p->val != q->val)return false;
+        return isSameTree(p->left,q->left) && isSameTree(p->right,q->right);
     }
 };
+
+ /*
+ * Zigzag Level Order Traversal Leetcode 103
+ * Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).
+ * Example 1:
+ * Input: root = [3,9,20,null,null,15,7]
+ * Output: [[3],[20,9],[15,7]]
+ * Example 2:
+ * Input: root = [1]
+ * Output: [[1]]
+ * Example 3:
+ * Input: root = []
+ * Output: []
+ * Constraints:
+ * The number of nodes in the tree is in the range [0, 2000].
+ * -100 <= Node.val <= 100
+ */
+
+
+class ZigzagLevelOrder {
+public:
+
+    void rec(TreeNode* r,vector<vector<int>> &ans){
+        if(r==NULL)return ;
+        queue<TreeNode*> st;
+        st.push(r);
+        
+        bool flag=false;
+        while(!st.empty()){
+            vector<int> temp;
+            int size = st.size();
+            for(int i=0;i<size;i++){
+                TreeNode *crr = st.front();
+                st.pop();
+                temp.push_back(crr->val);
+                if(crr->left)st.push(crr->left);
+                if(crr->right) st.push(crr->right);
+            }
+            if(flag== false)ans.push_back(temp);
+            else {
+                reverse(temp.begin(),temp.end());
+                ans.push_back(temp);
+            }
+            flag = 1-flag;
+        }
+
+    }
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> ans;
+        rec(root,ans);
+        return ans;
+    }
+};
+
 int main(){
     TreeNode* root = new TreeNode(1);
     root->left = new TreeNode(2);
