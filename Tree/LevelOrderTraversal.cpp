@@ -45,6 +45,22 @@ public:
         }
         return ans;
     }
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> ans;
+        if(root==NULL) return ans;
+        stack<TreeNode*> st;
+        st.push(root);
+        while(!st.empty()){
+            TreeNode* crr = st.top();
+            st.pop();
+            if(crr->right)st.push(crr->right);
+            if(crr->left) st.push(crr->left);
+            ans.push_back(crr->val);
+        }
+
+
+        return ans;
+    }
 };
 TreeNode* newNode(int val) {
     TreeNode* node = new TreeNode(val);
